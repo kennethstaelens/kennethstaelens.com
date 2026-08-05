@@ -1,0 +1,33 @@
+---
+const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Kenneth Staelens</title>
+		<meta
+			name="description"
+			content="The official website of Kenneth Staelens."
+		/>
+		<link rel="canonical" href={Astro.site} />
+		{gaMeasurementId && (
+			<>
+				<script async src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}></script>
+				<script define:vars={{ gaMeasurementId }} is:inline>
+					window.dataLayer = window.dataLayer || [];
+					function gtag(){dataLayer.push(arguments);}
+					gtag('js', new Date());
+					gtag('config', gaMeasurementId);
+				</script>
+			</>
+		)}
+	</head>
+	<body>
+		<h1>Kenneth Staelens</h1>
+	</body>
+</html>
