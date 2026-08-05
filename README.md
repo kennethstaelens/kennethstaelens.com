@@ -53,4 +53,4 @@ Cloudflare Pages deploys automatically whenever a commit reaches `main`.
 - Node version: `22.12.0`
 - Production URL: [kennethstaelens.com](https://kennethstaelens.com)
 
-The `www` hostname redirects to the apex domain through `public/_redirects`.
+The `www` hostname should redirect to the apex domain through a Cloudflare Bulk Redirect. Domain-level redirects are not supported in a Pages `_redirects` file.
