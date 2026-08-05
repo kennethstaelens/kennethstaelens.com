@@ -1,14 +1,5 @@
 export const featuredProjects = [
 	{
-		title: 'RSCA Away Kit',
-		client: 'RSC Anderlecht',
-		role: '3D animation · Launch film',
-		year: '2026',
-		video: '/media/rsca-away-kit.mp4',
-		poster: '/media/rsca-away-kit.jpg',
-		href: 'https://www.instagram.com/p/DbX5PWwM0Nz/',
-	},
-	{
 		title: 'Voor Altijd 3600',
 		client: 'Kosta Karetsas',
 		role: 'Film · Social campaign',
