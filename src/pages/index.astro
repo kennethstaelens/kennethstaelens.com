@@ -84,10 +84,17 @@ const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
 						<a class="project-card" href={project.href} target="_blank" rel="noreferrer" data-reveal>
 							<div class="video-wrap">
 								<span class="project-number">0{index + 1}</span>
-								<span class="project-arrow">View on Instagram ↗</span>
-								<video autoplay muted loop playsinline preload="metadata" poster={project.poster} aria-label={`${project.title} project excerpt`}>
-									<source src={project.video} type="video/mp4" />
-								</video>
+								<span class="project-arrow">View on {project.source} ↗</span>
+								{project.video ? (
+									<video autoplay muted loop playsinline preload="metadata" poster={project.poster} aria-label={`${project.title} project excerpt`}>
+										<source src={project.video} type="video/mp4" />
+									</video>
+								) : (
+									<>
+										<img src={project.poster} alt="" loading="lazy" />
+										<span class="play-mark" aria-hidden="true">Play</span>
+									</>
+								)}
 							</div>
 							<div class="project-meta">
 								<span>{project.title}</span>
