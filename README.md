@@ -1,43 +1,56 @@
-# Astro Starter Kit: Minimal
+# kennethstaelens.com
+
+Portfolio website for Kenneth Staelens, a Belgian graphic director and filmmaker working across sport and culture.
+
+## Stack
+
+- [Astro](https://astro.build/) 7
+- Static output hosted on Cloudflare Pages
+- GitHub `main` branch as the production source
+
+## Local development
+
+Requires Node.js 22.12.0 or newer.
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+The production build is generated in `dist/`:
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```sh
+npm run build
+npm run preview
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Environment variables
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Copy `.env.example` to `.env` and fill in the values you need:
 
-Any static assets, like images, can be placed in the `public/` directory.
+```sh
+PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+APIFY_TOKEN=apify_api_...
+```
 
-## 🧞 Commands
+`PUBLIC_GA_MEASUREMENT_ID` must also be configured in the Cloudflare Pages production environment because Astro injects it during the build.
 
-All commands are run from the root of the project, from a terminal:
+`APIFY_TOKEN` is for local content workflows only. Never add it to Cloudflare or commit `.env`.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Content
 
-## 👀 Want to learn more?
+- Featured projects: `src/data/projects.ts`
+- Page markup and metadata: `src/pages/index.astro`
+- Global styling: `src/styles/global.css`
+- Optimized project media: `public/media/`
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Deployment
+
+Cloudflare Pages deploys automatically whenever a commit reaches `main`.
+
+- Build command: `npm run build`
+- Output directory: `dist`
+- Node version: `22.12.0`
+- Production URL: [kennethstaelens.com](https://kennethstaelens.com)
+
+The `www` hostname redirects to the apex domain through `public/_redirects`.

@@ -10,10 +10,13 @@ const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
+		<script is:inline>document.documentElement.classList.add('js');</script>
 		<title>Kenneth Staelens — Sport + Story</title>
 		<meta name="description" content="Belgian graphic director and filmmaker creating visual stories across sport and culture." />
 		<link rel="canonical" href={Astro.site} />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/png" href="/favicon.png" />
+		<link rel="apple-touch-icon" href="/favicon.png" />
+		<link rel="manifest" href="/site.webmanifest" />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="Kenneth Staelens — Sport + Story" />
 		<meta property="og:description" content="Belgian graphic director and filmmaker creating visual stories across sport and culture." />
@@ -39,7 +42,7 @@ const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
 			<button class="menu-button" aria-expanded="false" aria-controls="site-menu">Menu</button>
 		</header>
 
-		<div id="site-menu" class="menu-panel" aria-hidden="true">
+		<div id="site-menu" class="menu-panel" aria-hidden="true" inert>
 			<div class="menu-top">
 				<span>KENNETH STAELENS</span>
 				<button class="menu-close">Close</button>
@@ -135,12 +138,20 @@ const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
 			const openButton = document.querySelector('.menu-button');
 			const closeButton = document.querySelector('.menu-close');
 			const menuLinks = document.querySelectorAll('.menu-panel a');
+			let lastFocused: Element | null = null;
 
-			function setMenu(open) {
+			function setMenu(open: boolean) {
 				panel?.classList.toggle('is-open', open);
 				panel?.setAttribute('aria-hidden', String(!open));
+				panel?.toggleAttribute('inert', !open);
 				openButton?.setAttribute('aria-expanded', String(open));
 				document.body.style.overflow = open ? 'hidden' : '';
+				if (open) {
+					lastFocused = document.activeElement;
+					closeButton?.focus();
+				} else if (lastFocused instanceof HTMLElement) {
+					lastFocused.focus();
+				}
 			}
 
 			openButton?.addEventListener('click', () => setMenu(true));
@@ -148,13 +159,18 @@ const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
 			menuLinks.forEach((link) => link.addEventListener('click', () => setMenu(false)));
 			document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setMenu(false); });
 
-			const observer = new IntersectionObserver(
-				(entries) => entries.forEach((entry) => {
-					if (entry.isIntersecting) entry.target.classList.add('is-visible');
-				}),
-				{ threshold: 0.1 },
-			);
-			document.querySelectorAll('[data-reveal]').forEach((node) => observer.observe(node));
+			const revealNodes = document.querySelectorAll('[data-reveal]');
+			if ('IntersectionObserver' in window) {
+				const observer = new IntersectionObserver(
+					(entries) => entries.forEach((entry) => {
+						if (entry.isIntersecting) entry.target.classList.add('is-visible');
+					}),
+					{ threshold: 0.1 },
+				);
+				revealNodes.forEach((node) => observer.observe(node));
+			} else {
+				revealNodes.forEach((node) => node.classList.add('is-visible'));
+			}
 
 			if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
 				document.querySelectorAll('video').forEach((video) => video.pause());

@@ -1,5 +1,7 @@
 {
   "name": "kennethstaelens.com",
+  "description": "Portfolio website for Belgian graphic director and filmmaker Kenneth Staelens.",
+  "private": true,
   "type": "module",
   "version": "0.0.1",
   "engines": {
